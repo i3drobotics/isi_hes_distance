@@ -1,12 +1,9 @@
 import cv2
 import numpy as np
 import time
-from matplotlib import pyplot as plt
-import argparse
 import signal
 import math
 import os
-import pptk
 
 def ranger():
     dist = getRange()
