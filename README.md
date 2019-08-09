@@ -1,24 +1,29 @@
-# python_tools
-Collection of useful python scripts for 3D
+# ISI Hes Distance
 
-# Generate3D
-Generate point cloud and disparity map from stereo images
+Measure the distance of point infront deimos camera when mounted to HES probe.
+
 ## required modules
+
  - numpy
- - matplotlib
  - opencv-python
- - pptk
 
-Command to install modules: python -m pip install numpy matplotlib opencv-python pptk
+Command to install modules: python -m pip install numpy opencv-python
 
-## run
-Command to run: python generate3D.py
-default settings:
-- loads images from 'input/'
-- loads calibration xml files from 'cal/'
-- outputs disparity maps to 'output/disparity'
-- outputs point clouds to 'output/point_clouds'
-- matcher settings can be changed inside generate3D.py
-If pose of camera is known the point clouds can be transformed.
-Pose should be provided in the input folder with the pose in format [x,y,z,w,x,y,z].
-Pose file should have extension '.txt' however this wildcard can be adjusted
+## Run
+
+Command to run: 
+```bash
+
+python RangeFunctionEditedAndSanityCheck.py
+
+```
+Will print the distance to the terminal
+
+## Running from labview
+
+Script: RangeFunctionEditedAndSanityCheck.py
+
+Use the function 'ranger' to get the range of center in front of deimos. (Returns Double: distance)
+
+Use 'sanity' to check for the existance of the laser in the images.
+(Returns Boolean: True/False)
