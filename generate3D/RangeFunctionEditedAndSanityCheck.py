@@ -7,6 +7,7 @@ import os
 
 def ranger():
     dist = getRange()
+    print (dist)
     return dist
 
 def getRange():
@@ -19,7 +20,6 @@ def getRange():
     Rot_matrix,Tran_dist,Q_matrix,Rmatrix,Rdist,Lmatrix,Ldist = loadCalibration()
     cam = initVideoCamera()
     
-
     for imageNum in range(maxImageCount):
         frame_right,frame_left = getStereoImages(cam)
         rectR,rectL = rectifyStereoImages(frame_right,frame_left,Rot_matrix,Tran_dist,Rmatrix,Rdist,Lmatrix,Ldist)
@@ -37,19 +37,20 @@ def getRange():
 
 def loadCalibration():
     #loads in the stereo calibration
-    Scal = cv2.FileStorage("cal/stereo_calibration.xml", cv2.FILE_STORAGE_READ)
+    script_path = os.path.dirname(os.path.realpath(__file__))
+    Scal = cv2.FileStorage(script_path+"/cal/stereo_calibration.xml", cv2.FILE_STORAGE_READ)
     Rot_matrix = Scal.getNode("R").mat()
     Tran_dist = Scal.getNode("T").mat()
     Q_matrix = Scal.getNode("Q").mat()
     Scal.release()
 
     #loads in the calibration files and finds the camera matrix and the distortion coefficients
-    Rcal = cv2.FileStorage("cal/Right_calibration.xml", cv2.FILE_STORAGE_READ)
+    Rcal = cv2.FileStorage(script_path+"/cal/right_calibration.xml", cv2.FILE_STORAGE_READ)
     Rmatrix = Rcal.getNode("cameraMatrix").mat()
     Rdist = Rcal.getNode("distCoeffs").mat()
     Rcal.release()
 
-    Lcal = cv2.FileStorage("cal/left_calibration.xml", cv2.FILE_STORAGE_READ)
+    Lcal = cv2.FileStorage(script_path+"/cal/left_calibration.xml", cv2.FILE_STORAGE_READ)
     Lmatrix = Lcal.getNode("cameraMatrix").mat()
     Ldist = Lcal.getNode("distCoeffs").mat()
     Lcal.release()
@@ -197,6 +198,10 @@ def distToClosestPointsToOrigin(adjustedXPositions,adjustedYPositions,originalZP
             shortestDist = distFromOrigin
             listPoints.append(coord)
 
+    # check points where generated
+    if (len(listPoints) <= 0):
+        return -1
+
     distToPoint = originalZPositions[listPoints[-1]]
     
     return distToPoint
@@ -206,9 +211,6 @@ def averageDistance(totalDist,maxImageCount):
     averageDistance = round((averageDistance),3)
     
     return averageDistance
-
-
-
 
 def sanityCheck():
     cam = cv2.VideoCapture(0)
@@ -290,3 +292,6 @@ def sanityCheck():
 
     Tup = (Dist, Error)
     return Tup
+
+if __name__=="__main__":
+    ranger()
