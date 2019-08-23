@@ -56,7 +56,7 @@ while True:
         print('taking picture and applying calibration...')
         imgL = frame_left
         strt = str(t)
-        cv2.imwrite('input/L_rect_test'+strt+'_l_.png',imgL)
+        #cv2.imwrite('input/L_rect_test'+strt+'_l_.png',imgL)
         
         imgR = frame_right
         

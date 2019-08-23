@@ -104,10 +104,10 @@ def generate3D(rectR,rectL,Q_matrix):
     #define matching parameters
     #SETTINGS FOR PHOBOS NUCLEAR  
     algorithm = CV_MATCHER_BM
-    window_size = 30
+    window_size = 21
     block_size = 15
-    min_disp = 20
-    num_disp = 16*6
+    min_disp = -69
+    num_disp = 16*10
     uniqness_ratio = 15
     speckle_window_size = 500
     speckle_range = 5
@@ -208,6 +208,9 @@ def distToClosestPointsToOrigin(adjustedXPositions,adjustedYPositions,originalZP
 
 def averageDistance(totalDist,maxImageCount):
     averageDistance = totalDist / float(maxImageCount)
+    #subtracting difference from the front of the Deismos camera and the probe front
+    averageDistance -= 0.03
     averageDistance = round((averageDistance),3)
     
     return averageDistance
+
